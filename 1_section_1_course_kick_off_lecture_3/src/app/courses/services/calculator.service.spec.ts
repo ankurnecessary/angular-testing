@@ -17,9 +17,11 @@ describe("CalculatorService", () => {
   })
 
   it("should subtract 2 numbers", () => {
-    const calculator = new CalculatorService(new LoggerService());
+    const logger = jasmine.createSpyObj("LoggerService", ['log']);
+    const calculator = new CalculatorService(logger);
     const result = calculator.subtract(10, 5);
     expect(result).toBe(5, "unexpected subtraction result");
+    expect(logger.log).toHaveBeenCalledTimes(1);
   })
 
 })
