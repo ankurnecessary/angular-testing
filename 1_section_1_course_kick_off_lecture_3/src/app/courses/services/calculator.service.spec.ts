@@ -1,12 +1,8 @@
+import { TestBed } from "@angular/core/testing";
 import { CalculatorService } from "./calculator.service";
 import { LoggerService } from "./logger.service";
 
-/**
- * When we test a service then we provide the real instance of that service only while writing it's test.
- * For services which are injected we create a fake implementation.
- */
-
-// https://app.clickup.com/t/86ctzaqdd
+// https://app.clickup.com/t/86ctzb4tj
 describe("CalculatorService", () => {
 
   let loggerSpy: any,
@@ -15,7 +11,15 @@ describe("CalculatorService", () => {
   beforeEach(() => {
     console.log("Before each test");
     loggerSpy = jasmine.createSpyObj("LoggerService", ['log']); // create fake implementation of both LoggerService and it's log method
-    calculator = new CalculatorService(loggerSpy);
+
+    TestBed.configureTestingModule({
+      providers: [
+        CalculatorService,
+        { provide: LoggerService, useValue: loggerSpy }
+      ]
+    })
+
+    calculator = TestBed.inject(CalculatorService);
   })
 
   it("should add 2 numbers", () => {
