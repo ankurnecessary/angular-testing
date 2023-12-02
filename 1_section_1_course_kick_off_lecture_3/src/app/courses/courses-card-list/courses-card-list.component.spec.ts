@@ -70,7 +70,21 @@ describe('CoursesCardListComponent', () => {
 
   it("should display the first course", () => {
 
-    pending();
+    component.courses = setupCourses();
+
+    fixture.detectChanges();
+
+    const course = component.courses[0];
+
+    const card = el.query(By.css('.course-card:first-child')),
+      title = el.query(By.css('.mat-mdc-card-title')),
+      image = el.query(By.css('img'));
+
+    expect(card).toBeTruthy("Could not find course card");
+
+    expect(title.nativeElement.textContent).toBe(course.titles.description);
+
+    expect(image.nativeElement.src).toBe(course.iconUrl);
 
   });
 
