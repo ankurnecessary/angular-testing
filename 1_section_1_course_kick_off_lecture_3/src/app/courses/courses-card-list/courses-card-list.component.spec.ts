@@ -50,6 +50,15 @@ describe('CoursesCardListComponent', () => {
     // pass some data to the component to show
     component.courses = setupCourses();
 
+    /*
+      Courses were not getting populated in the DOM because change detection was not getting fired.
+      ***So we did it manually***.
+      No need to use waitForAsync() or any other async methods.
+    */
+    fixture.detectChanges(); // Fires up change detection mechanism
+
+    console.log(el.nativeElement.outerHTML); // Debugging step 1
+
     // Next we will make sure that data is getting displayed in the component by querying and asserting that the data is there
     const cards = el.queryAll(By.css('.course-card'));// Querying DOM to find if the .course-card exists or not
 
