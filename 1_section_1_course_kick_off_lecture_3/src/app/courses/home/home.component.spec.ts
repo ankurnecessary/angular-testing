@@ -13,14 +13,15 @@ import { of } from 'rxjs';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { click } from '../common/test-utils';
 
-
-
-
 describe('HomeComponent', () => {
 
   let fixture: ComponentFixture<HomeComponent>;
   let component: HomeComponent;
   let el: DebugElement;
+  let coursesService: any;
+
+  const beginnerCourses = setupCourses()
+    .filter(course => course.category == 'BEGINNER');
 
   beforeEach(waitForAsync(() => {
     const coursesServiceSpy = jasmine.createSpyObj('CoursesService', ['findAllCourses']);
@@ -37,6 +38,7 @@ describe('HomeComponent', () => {
         fixture = TestBed.createComponent(HomeComponent);
         component = fixture.componentInstance;
         el = fixture.debugElement;
+        coursesService = TestBed.inject(CoursesService);
       })
 
   }));
@@ -50,7 +52,13 @@ describe('HomeComponent', () => {
 
   it("should display only beginner courses", () => {
 
-    pending();
+    coursesService.findAllCourses.and.returnValue(of(beginnerCourses));
+
+    fixture.detectChanges();
+
+    const tabs = el.queryAll(By.css(".mdc-tab"))
+
+    expect(tabs.length).toBe(1, "Unexpected number of tabs found");
 
   });
 
