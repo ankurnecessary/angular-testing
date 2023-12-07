@@ -57,7 +57,7 @@ describe('CoursesCardListComponent', () => {
     */
     fixture.detectChanges(); // Fires up change detection mechanism
 
-    console.log(el.nativeElement.outerHTML); // Debugging step 1
+    // console.log(el.nativeElement.outerHTML); // Debugging step 1
 
     // Next we will make sure that data is getting displayed in the component by querying and asserting that the data is there
     const cards = el.queryAll(By.css('.course-card'));// Querying DOM to find if the .course-card exists or not
